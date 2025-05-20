@@ -16,8 +16,8 @@ BIBLIO_URL = "https://prenotabiblio.sba.unimi.it/portalePlanningAPI/api/entry/st
 
 payload = {
     "cliente": "biblio",
-    "start_time": 1747767600,
-    "end_time": 1747771200,
+    "start_time": timestamp_start,
+    "end_time": timestamp_start,
     "durata": 3600,
     "entry_type": 50,
     "area": 25,
