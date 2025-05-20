@@ -2,7 +2,7 @@ name: Daily Python Script
 
 on:
   schedule:
-    - cron: '35 12 * * *'  # 7:01 AM Italy time during summer
+    - cron: '40 8 * * *'  # 7:01 AM Italy time during summer
 
   workflow_dispatch:     # Allows manual triggering from the GitHub UI
 
