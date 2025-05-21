@@ -34,7 +34,11 @@ payload = {
 }
 
 try:
-    response = requests.post(url=BIBLIO_URL, json=payload)
+    headers = {
+    "User-Agent": "Mozilla/5.0",
+    "Content-Type": "application/json"
+    }
+    response = requests.post(url=BIBLIO_URL, json=payload, headers=headers)
     response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
     print("Request successful!")
     print(response.json())  # Try to print as JSON
