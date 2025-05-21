@@ -18,7 +18,7 @@ payload = {
     "cliente": "biblio",
     "start_time": timestamp_start,
     "end_time": timestamp_end,
-    "durata": 3600,
+    "durata": 36000,
     "entry_type": 50,
     "area": 25,
     "public_primary": "LDZFRC02L45E506X",
