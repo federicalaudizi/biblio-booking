@@ -13,6 +13,7 @@ timestamp_start = int(time.mktime(dt_start.timetuple()))
 timestamp_end = int(time.mktime(dt_end.timetuple()))
 
 BIBLIO_URL = "https://prenotabiblio.sba.unimi.it/portalePlanningAPI/api/entry/store"
+print(f"Sending request to: {BIBLIO_URL}")
 
 payload = {
     "cliente": "biblio",
@@ -35,9 +36,12 @@ payload = {
 
 try:
     headers = {
+    "Authorization": "Bearer eyJpdiI6IjlSOWp2S1pRazlaT2FXbTR6ZnhKOVE9PSIsInZhbHVlIjoiM2JnbGpaTUd4RGJIeHB5d1I5N1Y2UT09Ii",
     "User-Agent": "Mozilla/5.0",
-    "Content-Type": "application/json"
-    }
+    "Content-Type": "application/json;charset=UTF-8",
+    "Origin": "https://prenotabiblio.sba.unimi.it",
+    "Referer": "https://prenotabiblio.sba.unimi.it/portalePlanning/biblio/prenota/Riepilogo"
+}
     response = requests.post(url=BIBLIO_URL, json=payload, headers=headers)
     response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
     print("Request successful!")
