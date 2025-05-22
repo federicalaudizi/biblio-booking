@@ -45,8 +45,18 @@ headers = {
 try:
     response = requests.post(url=BIBLIO_URL, json=payload, headers=headers)
     response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    data = response.json()
     print("Request successful!")
     print(response.json())  # Try to print as JSON
+
+    codice = data.get('codice_prenotazione')
+    if codice:
+        with open("codice.txt", "w") as f:
+            f.write(codice)
+    else:
+        print("Warning: 'codice_prenotazione' not found in response.")
+        with open("codice.txt", "w") as f:
+            f.write("N/A")
 except requests.exceptions.HTTPError as err:
     print(f"HTTP error occurred: {err}")
     sys.exit(1)
