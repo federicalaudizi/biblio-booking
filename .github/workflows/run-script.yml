@@ -52,7 +52,7 @@ jobs:
       run: |
         curl -s -X POST https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage \
           -d chat_id=$TELEGRAM_CHAT_ID \
-          -d text="✅ Daily Python script completed successfully at $(TZ=Europe/Rome date). Codice prenotazione: ${{ steps.codice_fede.outputs.codice_fede }}"
+          -d text="✅ Daily Python script completed successfully at $(TZ=Europe/Rome date). Codice prenotazione fede: ${{ steps.codice_fede.outputs.codice_fede }}"
 
     - name: Send Telegram notification for nico
       if: success()
@@ -62,7 +62,7 @@ jobs:
       run: |
         curl -s -X POST https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage \
           -d chat_id=$TELEGRAM_CHAT_ID \
-          -d text="✅ Daily Python script completed successfully at $(TZ=Europe/Rome date). Codice prenotazione: ${{ steps.codice_nico.outputs.codice_nico }}"
+          -d text="✅ Daily Python script completed successfully at $(TZ=Europe/Rome date). Codice prenotazione nico: ${{ steps.codice_nico.outputs.codice_nico }}"
 
 
     - name: Send Telegram failure notification
