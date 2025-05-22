@@ -53,6 +53,25 @@ payload_nico = {
     "timezone": "Europe/Rome"
 }
 
+payload_nico = {
+    "cliente": "biblio",
+    "start_time": 1747940400,
+    "end_time": 1747944000,
+    "durata": 36000,
+    "entry_type": 50,
+    "area": 25,
+    "public_primary": "MRNMGH02E67F205R",
+    "utente": {
+        "codice_fiscale": "MRNMGH02E67F205R",
+        "cognome_nome": "Marino Margherita",
+        "email": "margheritamarino02@gmail.com"
+    },
+    "servizio": {},
+    "risorsa": None,
+    "recaptchaToken": None,
+    "timezone": "Europe/Rome"
+}
+
 headers = {
     "Authorization": "Bearer eyJpdiI6IjlSOWp2S1pRazlaT2FXbTR6ZnhKOVE9PSIsInZhbHVlIjoiM2JnbGpaTUd4RGJIeHB5d1I5N1Y2UT09Ii",
     "User-Agent": "Mozilla/5.0",
@@ -61,41 +80,40 @@ headers = {
     "Referer": "https://prenotabiblio.sba.unimi.it/portalePlanning/biblio/prenota/Riepilogo"
 }
 
-try:
-    response_fede = requests.post(url=BIBLIO_URL, json=payload_fede, headers=headers)
-    response_nico = requests.post(url=BIBLIO_URL, json=payload_nico, headers=headers)
-    response_fede.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-    response_nico.raise_for_status()
-    data_fede = response_fede.json()
-    data_nico = response_nico.json()
-    print("Request successful!")
-    print(response_fede.json())  # Try to print as JSON
-    print(response_nico.json())  # Try to print as JSON
 
+payloads = {
+    "fede": payload_fede,
+    "nico": payload_nico,
+    "marghe": payload_marghe
+}
 
-    codice_fede = data_fede.get('codice_prenotazione')
-    codice_nico = data_nico.get('codice_prenotazione')
-    if codice_fede:
-        with open("codice_fede.txt", "w") as f:
-            f.write(codice_fede)
-    else:
-        print("Warning: 'codice_prenotazione' not found in response.")
-        with open("codice_fede.txt", "w") as f:
+responses = {}
+
+for name, payload in payloads.items():
+    try:
+        response = requests.post(url=BIBLIO_URL, json=payload, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+        print(f"Request successful for {name}:")
+        print(data)
+        
+        codice = data.get('codice_prenotazione', "N/A")
+        if codice == "N/A":
+            print(f"Warning: 'codice_prenotazione' not found in {name}'s response.")
+        
+        with open(f"codice_{name}.txt", "w") as f:
+            f.write(codice)
+        
+    except requests.RequestException as e:
+        print(f"Request failed for {name}: {e}")
+        with open(f"codice_{name}.txt", "w") as f:
             f.write("N/A")
-   
-    if codice_nico:
-        with open("codice_nico.txt", "w") as f:
-            f.write(codice_nico)
-    else:
-        print("Warning: 'codice_prenotazione' not found in response.")
-        with open("codice_nico.txt", "w") as f:
-            f.write("N/A")
-except requests.exceptions.HTTPError as err:
-    print(f"HTTP error occurred: {err}")
-    sys.exit(1)
-except requests.exceptions.RequestException as e:
-    print(f"Request failed: {e}")
-    sys.exit(1)
-except Exception as e:
-    print(f"An unexpected error occurred: {e}")
-    sys.exit(1)
+    except requests.exceptions.HTTPError as err:
+        print(f"HTTP error occurred: {err}")
+        sys.exit(1)
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        sys.exit(1)
