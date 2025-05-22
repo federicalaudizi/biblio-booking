@@ -15,7 +15,7 @@ timestamp_end = int(time.mktime(dt_end.timetuple()))
 BIBLIO_URL = "https://prenotabiblio.sba.unimi.it/portalePlanningAPI/api/entry/store"
 print(f"Sending request to: {BIBLIO_URL}")
 
-payload = {
+payload_fede = {
     "cliente": "biblio",
     "start_time": 1747940400,
     "end_time": 1747944000,
@@ -34,6 +34,25 @@ payload = {
     "timezone": "Europe/Rome"
 }
 
+payload_nico = {
+    "cliente": "biblio",
+    "start_time": 1747940400,
+    "end_time": 1747944000,
+    "durata": 36000,
+    "entry_type": 50,
+    "area": 25,
+    "public_primary": "BMBNLR01E06B354Q",
+    "utente": {
+        "codice_fiscale": "BMBNLR01E06B354Q",
+        "cognome_nome": "Abimbola Nicola Oriola",
+        "email": "nicolaabimbola@gmail.com"
+    },
+    "servizio": {},
+    "risorsa": None,
+    "recaptchaToken": None,
+    "timezone": "Europe/Rome"
+}
+
 headers = {
     "Authorization": "Bearer eyJpdiI6IjlSOWp2S1pRazlaT2FXbTR6ZnhKOVE9PSIsInZhbHVlIjoiM2JnbGpaTUd4RGJIeHB5d1I5N1Y2UT09Ii",
     "User-Agent": "Mozilla/5.0",
@@ -43,19 +62,30 @@ headers = {
 }
 
 try:
-    response = requests.post(url=BIBLIO_URL, json=payload, headers=headers)
+    response_fede = requests.post(url=BIBLIO_URL, json=payload_fede, headers=headers)
+    response_nico = requests.post(url=BIBLIO_URL, json=payload_nico, headers=headers)
     response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-    data = response.json()
+    data_fede = response_fede.json()
+    data_nico = response_nico.json()
     print("Request successful!")
     print(response.json())  # Try to print as JSON
 
-    codice = data.get('codice_prenotazione')
-    if codice:
-        with open("codice.txt", "w") as f:
-            f.write(codice)
+    codice_fede = data_fede.get('codice_prenotazione')
+    codice_nico = data_nico.get('codice_prenotazione')
+    if codice_fede:
+        with open("codice_fede.txt", "w") as f:
+            f.write(codice_fede)
     else:
         print("Warning: 'codice_prenotazione' not found in response.")
-        with open("codice.txt", "w") as f:
+        with open("codice_fede.txt", "w") as f:
+            f.write("N/A")
+   
+    if codice_nico:
+        with open("codice_nico.txt", "w") as f:
+            f.write(codice_nico)
+    else:
+        print("Warning: 'codice_prenotazione' not found in response.")
+        with open("codice_nico.txt", "w") as f:
             f.write("N/A")
 except requests.exceptions.HTTPError as err:
     print(f"HTTP error occurred: {err}")
