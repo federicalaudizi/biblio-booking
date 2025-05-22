@@ -64,7 +64,8 @@ headers = {
 try:
     response_fede = requests.post(url=BIBLIO_URL, json=payload_fede, headers=headers)
     response_nico = requests.post(url=BIBLIO_URL, json=payload_nico, headers=headers)
-    response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    response_fede.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    response_nico.raise_for_status()
     data_fede = response_fede.json()
     data_nico = response_nico.json()
     print("Request successful!")
