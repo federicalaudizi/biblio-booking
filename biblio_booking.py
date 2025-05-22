@@ -34,19 +34,25 @@ payload = {
     "timezone": "Europe/Rome"
 }
 
-try:
-    headers = {
+headers = {
     "Authorization": "Bearer eyJpdiI6IjlSOWp2S1pRazlaT2FXbTR6ZnhKOVE9PSIsInZhbHVlIjoiM2JnbGpaTUd4RGJIeHB5d1I5N1Y2UT09Ii",
     "User-Agent": "Mozilla/5.0",
     "Content-Type": "application/json;charset=UTF-8",
     "Origin": "https://prenotabiblio.sba.unimi.it",
     "Referer": "https://prenotabiblio.sba.unimi.it/portalePlanning/biblio/prenota/Riepilogo"
 }
+
+try:
     response = requests.post(url=BIBLIO_URL, json=payload, headers=headers)
     response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
     print("Request successful!")
     print(response.json())  # Try to print as JSON
+except requests.exceptions.HTTPError as err:
+    print(f"HTTP error occurred: {err}")
+    sys.exit(1)
 except requests.exceptions.RequestException as e:
     print(f"Request failed: {e}")
+    sys.exit(1)
 except Exception as e:
     print(f"An unexpected error occurred: {e}")
+    sys.exit(1)
