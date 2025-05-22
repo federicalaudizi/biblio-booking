@@ -9,23 +9,33 @@ dt_start = datetime.datetime(today.year, today.month, today.day, 9, 0, 0)
 # Set the end time to 19:00 PM
 dt_end = datetime.datetime(today.year, today.month, today.day, 19, 0, 0)
 # Convert to Unix timestamp
-timestamp_start = int(time.mktime(dt_start.timetuple()))
-timestamp_end = int(time.mktime(dt_end.timetuple()))
+timestamp_start_nine = int(time.mktime(dt_start.timetuple()))
+timestamp_end_seven = int(time.mktime(dt_end.timetuple()))
+
+
+# Set the start time to 09:30 AM
+dt_start_thirty = datetime.datetime(today.year, today.month, today.day, 9, 30, 0)
+# Set the end time to 19:30 PM
+dt_end_thirty = datetime.datetime(today.year, today.month, today.day, 19, 30, 0)
+# Convert to Unix timestamp
+timestamp_start_ninethirty = int(time.mktime(dt_start_thirty.timetuple()))
+timestamp_end_seventhirty = int(time.mktime(dt_end_thirty.timetuple()))
+
 
 BIBLIO_URL = "https://prenotabiblio.sba.unimi.it/portalePlanningAPI/api/entry/store"
 print(f"Sending request to: {BIBLIO_URL}")
 
 payload_fede = {
     "cliente": "biblio",
-    "start_time": 1747940400,
-    "end_time": 1747944000,
+    "start_time": timestamp_start_nine,
+    "end_time": timestamp_end_seven,
     "durata": 36000,
     "entry_type": 50,
     "area": 25,
     "public_primary": "LDZFRC02L45E506X",
     "utente": {
         "codice_fiscale": "LDZFRC02L45E506X",
-        "cognome_nome": "Federica Laudizi",
+        "cognome_nome": "Laudizi Federica",
         "email": "federicalaudizi@gmail.com"
     },
     "servizio": {},
@@ -36,8 +46,8 @@ payload_fede = {
 
 payload_nico = {
     "cliente": "biblio",
-    "start_time": 1747940400,
-    "end_time": 1747944000,
+    "start_time": timestamp_start_ninethirty,
+    "end_time": timestamp_end_seventhirty,
     "durata": 36000,
     "entry_type": 50,
     "area": 25,
@@ -55,8 +65,8 @@ payload_nico = {
 
 payload_marghe = {
     "cliente": "biblio",
-    "start_time": 1747940400,
-    "end_time": 1747944000,
+    "start_time": timestamp_start_ninethirty,
+    "end_time": timestamp_end_seventhirty,
     "durata": 36000,
     "entry_type": 50,
     "area": 25,
