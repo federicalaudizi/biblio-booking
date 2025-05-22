@@ -34,11 +34,15 @@ jobs:
       run: |
         python biblio_booking.py
     
-    - name: Read codice prenotazione
+    - name: Read codice prenotazione fede
       if: success()
-      id: codice
-      run: echo "codice=$(cat codice.txt)" >> "$GITHUB_OUTPUT"
+      id: codice_fede
+      run: echo "codice=$(cat codice_fede.txt)" >> "$GITHUB_OUTPUT"
 
+    - name: Read codice prenotazione nico
+      if: success()
+      id: codice_nico
+      run: echo "codice=$(cat codice_nico.txt)" >> "$GITHUB_OUTPUT"
 
     - name: Send Telegram notification for fede
       if: success()
