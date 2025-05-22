@@ -2,7 +2,7 @@ name: Daily Python Script
 
 on:
   schedule:
-    - cron: '15 8 * * *'  # 7:01 AM Italy time during summer
+    - cron: '55 4 * * *'  # 7:01 AM Italy time during summer
 
   workflow_dispatch:     # Allows manual triggering from the GitHub UI
 
@@ -19,12 +19,12 @@ jobs:
       with:
         python-version: '3.10' 
         
-    #- name: Wait until 7:00 AM CEST
-    #  run: |
-    #    echo "Waiting until 7:00 AM CEST..."
-    #    while [ "$(TZ=Europe/Rome date +%H:%M)" != "07:00" ]; do
-    #      sleep 5
-    #    done
+    - name: Wait until 7:01 AM CEST
+      run: |
+        echo "Waiting until 7:01 AM CEST..."
+        while [ "$(TZ=Europe/Rome date +%H:%M)" != "07:01" ]; do
+          sleep 5
+        done
 
     - name: Install dependencies
       run: |
