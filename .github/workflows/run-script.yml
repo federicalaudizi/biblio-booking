@@ -61,7 +61,7 @@ jobs:
           -d text="✅ Daily Python script completed successfully at $(TZ=Europe/Rome date). Codice prenotazione: ${{ steps.codice_nico.outputs.codice_nico }}"
 
 
-  - name: Send Telegram failure notification
+    - name: Send Telegram failure notification
       if: failure()
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
