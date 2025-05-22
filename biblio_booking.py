@@ -68,7 +68,9 @@ try:
     data_fede = response_fede.json()
     data_nico = response_nico.json()
     print("Request successful!")
-    print(response.json())  # Try to print as JSON
+    print(response_fede.json())  # Try to print as JSON
+    print(response_nico.json())  # Try to print as JSON
+
 
     codice_fede = data_fede.get('codice_prenotazione')
     codice_nico = data_nico.get('codice_prenotazione')
