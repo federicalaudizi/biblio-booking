@@ -17,8 +17,8 @@ print(f"Sending request to: {BIBLIO_URL}")
 
 payload = {
     "cliente": "biblio",
-    "start_time": timestamp_start,
-    "end_time": timestamp_end,
+    "start_time": 1747940400,
+    "end_time": 1747944000,
     "durata": 36000,
     "entry_type": 50,
     "area": 25,
