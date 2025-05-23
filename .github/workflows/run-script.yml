@@ -2,7 +2,7 @@ name: Daily Python Script
 
 on:
   schedule:
-    - cron: '55 4 * * *'  # 7:01 AM Italy time during summer
+    - cron: '50 4 * * *'  # 7:01 AM Italy time during summer
 
   workflow_dispatch:     # Allows manual triggering from the GitHub UI
 
@@ -19,12 +19,20 @@ jobs:
       with:
         python-version: '3.10' 
         
-    - name: Wait until 7:01 AM CEST
+    - name: Wait until 7:01 AM CEST if earlier
       run: |
-        echo "Waiting until 7:01 AM CEST..."
-        while [ "$(TZ=Europe/Rome date +%H:%M)" != "07:01" ]; do
-          sleep 5
-        done
+        echo "Checking current time in Europe/Rome timezone..."
+        current_time=$(TZ=Europe/Rome date +%H:%M)
+        target_time="07:01"
+    
+        if [[ "$current_time" < "$target_time" ]]; then
+          echo "Current time ($current_time) is before $target_time. Waiting..."
+          while [ "$(TZ=Europe/Rome date +%H:%M)" != "$target_time" ]; do
+            sleep 5
+          done
+        else
+          echo "Current time ($current_time) is after $target_time. Continuing without wait."
+        fi
 
     - name: Install dependencies
       run: |
